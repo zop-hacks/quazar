@@ -29,7 +29,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form action={emailLogin}>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <OAuthButtons />
@@ -51,14 +51,7 @@ export function LoginForm({
                   />
                 </div>
                 <div className="grid gap-2">
-                  <div className="flex items-center">
-                    <Link
-                      href="/forgot-password"
-                      className="ml-auto text-sm underline-offset-4 hover:underline"
-                    >
-                      Forgot your password?
-                    </Link>
-                  </div>
+                  <Label htmlFor="password">Password</Label>
                   <Input
                     id="password"
                     name="password"
@@ -68,7 +61,6 @@ export function LoginForm({
                 </div>
                 <Button
                   type="submit"
-                  formAction={emailLogin}
                   className="w-full"
                 >
                   Log In
@@ -87,11 +79,6 @@ export function LoginForm({
           </form>
         </CardContent>
       </Card>
-      <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary  ">
-        By clicking continue, you agree to our{" "}
-        <Link href="/terms">Terms of Service</Link> and{" "}
-        <Link href="/privacy-policy">Privacy Policy</Link>.
-      </div>
     </div>
   );
 }

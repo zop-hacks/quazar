@@ -16,6 +16,7 @@ export const PresentQuestion = ({
   duration: number
   finishQuestion: () => void
 }) => {
+  if (question) {
   return (
     <div className="container mx-auto px-4 py-8 flex flex-col items-center h-[calc(100vh-4rem)]">
       <div className="text-center mb-10 w-full">
@@ -40,5 +41,5 @@ export const PresentQuestion = ({
         </Button>
       </motion.h2>
     </div>
-  )
+  )}
 }

@@ -56,8 +56,9 @@ export default function RoomConnector({
     });
 
     roomSocket.on("question_response", (data) => {
-      fetchingRef.current = false;
       setCurrentQuestion(data);
+
+      fetchingRef.current = false;
     });
 
     roomSocket.on("player_list", (players) => {
@@ -91,12 +92,17 @@ export default function RoomConnector({
   const nextQuestion = () => {
     if (!fetchingRef.current) {
       fetchingRef.current = true;
+      setCurrentQuestion({
+        question: "",
+        answers: [{ "": false }],
+        info: { duration: 0 },
+      })
+      
       fetchQuestion();
-
+      questionIndex.current +=  1;
       setTimeout(() => {
         setGameState("question");
-        questionIndex.current += 1;
-      }, 200);
+      }, 300);
     }
   };
   const finishQuestion = () => {

@@ -29,7 +29,7 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form action={signup}>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <OAuthButtons />
@@ -71,7 +71,7 @@ export function SignupForm({
                     required
                   />
                 </div>
-                <Button type="submit" formAction={signup} className="w-full">
+                <Button type="submit" className="w-full">
                   Sign Up
                 </Button>
               </div>

@@ -4,7 +4,9 @@ import QuizCreator from "./quiz-creator";
 
 const Page = () => {
   const onRedirect = (url: string) => {
+    setTimeout(() => {
     redirect(url);
+    }, 150)
   };
   return (
     <QuizCreator onRedirect={onRedirect}/>
