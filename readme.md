@@ -44,11 +44,5 @@ Below is the chain of agents that turn your prompt into a finished quiz:
 
 ---
 
-## 📖 Documentation
-
-For full API details and deeper architecture notes, see [the API docs](https://quazar.example.com/docs).
-
----
-
 Made with ❤️ by ZOP 
 Submitted to the [AlgoArena Hackathon](https://algoarena.devpost.com/)  
