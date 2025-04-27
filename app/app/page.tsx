@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { HeroSection } from "@/app/components/landing/hero-section"
 import { FeaturesSection } from "@/app/components/landing/features-section"
