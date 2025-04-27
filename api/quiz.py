@@ -10,6 +10,7 @@ sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins=[
         "https://localhost",
         "http://localhost",
         "https://quizar-app--quazar-test001.us-central1.hosted.app",
+        "https://quazar--quazarai.us-central1.hosted.app",
         "*"
     ])
 socket_app = socketio.ASGIApp(sio, socketio_path="/ws/socket.io")
