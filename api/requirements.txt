@@ -1,0 +1,7 @@
+uvicorn
+fastapi
+python-socketio[asgi]
+openai-agents
+supabase
+tiktoken
+pdfminer.six

@@ -1,0 +1,27 @@
+# Settings for Backend (on Cloud Run).
+# See https://firebase.google.com/docs/app-hosting/configure#cloud-run
+runConfig:
+  minInstances: 0
+  # maxInstances: 100
+  # concurrency: 80
+  # cpu: 1
+  # memoryMiB: 512
+
+# Environment variables and secrets.
+env:
+- variable: NEXT_PUBLIC_SUPABASE_URL
+  value: https://gdnhoylvspdpqraknwhl.supabase.co
+- variable: NEXT_PUBLIC_SUPABASE_ANON_KEY
+  value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdkbmhveWx2c3BkcHFyYWtud2hsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ1Njc4OTIsImV4cCI6MjA2MDE0Mzg5Mn0.TvfQCSghHFalWo2S7ELTsV_eErF3si-_aD1RpWuGLfw
+  # Configure environment variables.
+  # See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
+  # - variable: MESSAGE
+  #   value: Hello world!
+  availability:
+    - BUILD
+    - RUNTIME
+
+  # Grant access to secrets in Cloud Secret Manager.
+  # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
+  # - variable: MY_SECRET
+  #   secret: mySecretRef

@@ -1,0 +1,11 @@
+/* Prevent layout shift when scrollbar appears/disappears */
+.prevent-scroll-shift {
+    padding-right: var(--scrollbar-width, 0);
+    overflow-y: scroll; /* Always show scrollbar */
+  }
+  
+  /* Make sure the header stays fixed width */
+  header.prevent-scroll-shift {
+    width: calc(100% - var(--scrollbar-width, 0));
+  }
+  
