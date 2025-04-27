@@ -6,7 +6,9 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import { z } from "zod";
 import { Provider } from "@supabase/supabase-js";
-import { getURL } from "@/utils/helpers";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL!;
+const REDIRECT_TO = `${SITE_URL}/teach/your-quizzes`;
 
 export async function emailLogin(formData: FormData) {
   const supabase = await createClient();
@@ -24,11 +26,11 @@ export async function emailLogin(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    redirect("/login?message=Could not authenticate user");
+    redirect(`${SITE_URL}/login?message=Could not authenticate user`);
   }
 
-  revalidatePath("/", "layout");
-  redirect("/teach/my-quizzes");
+  revalidatePath("/");
+  redirect(REDIRECT_TO);
 }
 
 export async function signup(formData: FormData) {
@@ -47,32 +49,36 @@ export async function signup(formData: FormData) {
   const { error } = await supabase.auth.signUp(data);
 
   if (error) {
-    redirect("/login?message=Error signing up");
+    redirect(`${SITE_URL}/login?message=Error signing up`);
   }
 
-  revalidatePath("/", "layout");
-  redirect("/signup/please-check-email");
+  revalidatePath("/");
+  redirect(`${SITE_URL}/signup/please-check-email`);
 }
 
 export async function signOut() {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  redirect("/login");
+  redirect(`${SITE_URL}/login`);
 }
+
 export async function oAuthSignIn(provider: Provider) {
   if (!provider) {
-    return redirect("/login?message=No provider selected");
+    redirect(`${SITE_URL}/login?message=No provider selected`);
   }
+
   const supabase = await createClient();
-  const redirectUrl = getURL("/auth/callback");
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: redirectUrl,
+      redirectTo: REDIRECT_TO,
     },
   });
+
   if (error) {
-    redirect("/login?message=Could not authenticate user");
+    redirect(`${SITE_URL}/login?message=Could not authenticate user`);
   }
-  return redirect(data.url)
+
+  // data.url is the Supabase-generated OAuth handshake URL
+  redirect(data.url);
 }
