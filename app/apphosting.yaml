@@ -9,6 +9,8 @@ runConfig:
 
 # Environment variables and secrets.
 env:
+- variable: NEXT_PUBLIC_SITE_URL
+  value: https://quazar--quazarai.us-central1.hosted.app
 - variable: NEXT_PUBLIC_SUPABASE_URL
   value: https://gdnhoylvspdpqraknwhl.supabase.co
 - variable: NEXT_PUBLIC_SUPABASE_ANON_KEY
