@@ -13,7 +13,7 @@ export default function QuizEditorDemo({
   quizUrl: string;
 }) {
   return (
-    <div className="h-[calc(100vh-4rem)] bg-zinc-50 dark:bg-zinc-900">
+    <div className="h-[calc(100vh-4rem)] bg-zinc-50 ">
       <main>
         <QuizEditor
           initialQuizData={quizData}

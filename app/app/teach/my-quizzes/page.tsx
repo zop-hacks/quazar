@@ -50,7 +50,7 @@ const page = async () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">
+                <p className="text-sm text-zinc-600  line-clamp-2">
                   {quiz.description}
                 </p>
               </CardContent>
@@ -75,7 +75,7 @@ const page = async () => {
       {quizzes === null ||
         (quizzes.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-zinc-500 dark:text-zinc-400 mb-4">
+            <p className="text-zinc-500  mb-4">
               You haven't created any quizzes yet.
             </p>
             <Link href="/gen-quiz">

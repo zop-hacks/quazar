@@ -1,42 +1,51 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Save, Check, Loader2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Save, Check, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface SaveButtonProps {
   onSave: () => void;
-  className?: string
+  className?: string;
 }
 
-export function SaveButton({ onSave, className}: SaveButtonProps) {
-  const [isSaving, setIsSaving] = useState(false)
-  const [isSaved, setIsSaved] = useState(false)
+export function SaveButton({ onSave, className }: SaveButtonProps) {
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   const handleSave = async () => {
-    setIsSaving(true)
+    setIsSaving(true);
     try {
-      onSave()
-      setIsSaved(true)
-      setTimeout(() => setIsSaved(false), 2000)
+      onSave();
+      setIsSaved(true);
+      setTimeout(() => setIsSaved(false), 2000);
     } catch (error) {
-      console.error("Failed to save:", error)
+      console.error("Failed to save:", error);
     } finally {
-      setIsSaving(false)
+      setIsSaving(false);
     }
-  }
+  };
 
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className={className}>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={className}
+          >
             <Button
               onClick={handleSave}
               disabled={isSaving}
-              className="gap-2 bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
+              className="gap-2 bg-green-600 hover:bg-green-700  :bg-green-800"
             >
               {isSaving ? (
                 <>
@@ -62,5 +71,5 @@ export function SaveButton({ onSave, className}: SaveButtonProps) {
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-  )
+  );
 }

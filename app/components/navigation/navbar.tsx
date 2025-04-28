@@ -105,7 +105,6 @@ export function Navbar({ user, signOut }: NavbarProps) {
                   </Link>
                 )}
               </div>
-
             </div>
             {/* Mobile menu button */}
             <div className="flex md:hidden">
@@ -161,7 +160,7 @@ export function Navbar({ user, signOut }: NavbarProps) {
                           <div className="space-y-1">
                             <button
                               onClick={() => signOut()}
-                              className="flex items-center py-2 text-base font-medium text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors"
+                              className="flex items-center py-2 text-base font-medium text-red-600  hover:text-red-700 :text-red-300 transition-colors"
                             >
                               <LogOut className="mr-2 h-4 w-4" />
                               <span>Log out</span>

@@ -1,7 +1,12 @@
-"use client"
-import { motion } from "framer-motion"
-import { ChevronDown } from "lucide-react"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+"use client";
+import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const faqs = [
   {
@@ -34,17 +39,17 @@ const faqs = [
     answer:
       "We take data security seriously. All quiz data is encrypted, and we follow industry best practices for data protection. We never share your content or participant data with third parties, and you retain full ownership of all your quizzes.",
   },
-]
+];
 
 export function FAQ() {
   return (
-    <section className="bg-white py-24 dark:bg-zinc-950">
+    <section className="bg-white py-24 ">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-white">
+          <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl ">
             Frequently Asked Questions
           </h2>
-          <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-400">
+          <p className="mt-4 text-lg text-zinc-600 ">
             Have questions about Quazar? Find answers to common questions below.
           </p>
         </div>
@@ -61,12 +66,12 @@ export function FAQ() {
               >
                 <AccordionItem
                   value={`item-${index}`}
-                  className="rounded-lg border border-zinc-200 dark:border-zinc-800"
+                  className="rounded-lg border border-zinc-200 "
                 >
-                  <AccordionTrigger className="px-6 py-4 text-left text-zinc-900 dark:text-white">
+                  <AccordionTrigger className="px-6 py-4 text-left text-zinc-900 ">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4 pt-2 text-zinc-600 dark:text-zinc-400">
+                  <AccordionContent className="px-6 pb-4 pt-2 text-zinc-600 ">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -76,7 +81,9 @@ export function FAQ() {
         </div>
 
         <div className="mt-16 text-center">
-          <p className="text-zinc-600 dark:text-zinc-400">Still have questions? We're here to help.</p>
+          <p className="text-zinc-600 ">
+            Still have questions? We're here to help.
+          </p>
           <motion.div
             className="mt-6"
             initial={{ opacity: 0, y: 20 }}
@@ -86,7 +93,7 @@ export function FAQ() {
           >
             <a
               href="#contact"
-              className="inline-flex items-center text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300"
+              className="inline-flex items-center text-purple-600 hover:text-purple-700  :text-purple-300"
             >
               Contact our support team
               <ChevronDown className="ml-1 h-4 w-4" />
@@ -95,5 +102,5 @@ export function FAQ() {
         </div>
       </div>
     </section>
-  )
+  );
 }
