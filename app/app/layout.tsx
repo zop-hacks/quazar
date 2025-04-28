@@ -15,11 +15,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable } inter.className`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} inter.className`}
+      >
         <CollapsibleNavbar />
-        <div className="h-16" ></div>
+        <div className="h-16"></div>
         {children}
-        </body>
+      </body>
     </html>
   );
 }

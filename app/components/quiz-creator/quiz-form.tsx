@@ -144,7 +144,7 @@ export function QuizForm({
             }) => (
               <FormItem>
                 <FormLabel className="after:content-[''] after:ml-0.5">
-                  Focus Areas
+                  Focus Areas (optional)
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -153,7 +153,7 @@ export function QuizForm({
                   />
                 </FormControl>
                 <FormDescription>
-                  Specific aspects to focus on (optional)
+                  Specific aspects to focus on
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -275,7 +275,7 @@ export function QuizForm({
           }) => (
             <FormItem>
               <FormLabel className="after:content-[''] after:ml-0.5">
-                Additional Information
+                Additional Information (optional)
               </FormLabel>
               <FormControl>
                 <Textarea
@@ -285,7 +285,7 @@ export function QuizForm({
                 />
               </FormControl>
               <FormDescription>
-                Special instructions or preferences for the AI (optional)
+                Special instructions or preferences for the AI
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -301,7 +301,7 @@ export function QuizForm({
             field: ControllerRenderProps<FormValues, "sourceMaterial">;
           }) => (
             <FormItem>
-              <FormLabel>Source Material</FormLabel>
+              <FormLabel>Source Material (optional)</FormLabel>
               <FormControl>
                 <FileUpload
                   value={field.value}
