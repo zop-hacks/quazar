@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { flushSync } from "react-dom";
 
 interface QuestionEditorProps {
   questionData: {
@@ -39,12 +40,14 @@ interface QuestionEditorProps {
   };
   onUpdate: (updatedQuestion: any) => void;
   className?: string;
+  onSave: () => void
 }
 
 export function QuestionEditor({
   questionData,
   onUpdate,
   className,
+  onSave,
 }: QuestionEditorProps) {
   const [question, setQuestion] = useState(questionData.question);
   const [answers, setAnswers] = useState(questionData.answers);
@@ -76,20 +79,34 @@ export function QuestionEditor({
     setDuration(value[0]);
   };
 
-  const handleSaveChanges = () => {
+  const handleSaveChanges = async () => {
     onUpdate({
       question,
       answers,
       duration,
     });
   };
+  const handleDeleteQuestion = async() => {
+    setQuestion("")
+    setAnswers([])
+    setDuration(0)
+    onUpdate({ question: "", answers: [], duration: 0 });
+    setTimeout(() => {
+      window.location.reload()}, 100)
+  };
+
 
   const answerLetters = ["A", "B", "C", "D"];
 
   return (
     <Card className={cn("w-full h-[calc(100%-4rem)] pb-0.5", className)}>
       <CardHeader>
-        <CardTitle className="text-xl font-semibold">Edit Question</CardTitle>
+        <div className="flex justify-between">
+          <CardTitle className="text-xl font-semibold">Edit Question</CardTitle>
+          <Button variant="destructive" onClick={handleDeleteQuestion}>
+            <Trash2 />
+          </Button>
+        </div>
         <CardDescription>
           Update the question, answers, and settings
         </CardDescription>

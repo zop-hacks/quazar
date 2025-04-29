@@ -2,7 +2,8 @@ import socketio
 from random import randint
 from quiz_gen.gen_quiz import gen_quiz
 from quiz_gen.type_annotations import Details
-from utils.verify_user_jwt import supabase
+from utils.verify_user_jwt import supabase, verify_user
+
 import time
 sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins=[
         "http://localhost:3000",
@@ -11,11 +12,13 @@ sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins=[
         "http://localhost",
         "https://quizar-app--quazar-test001.us-central1.hosted.app",
         "https://quazar--quazarai.us-central1.hosted.app",
+        "https://quazarai.com",
         "*"
     ])
 socket_app = socketio.ASGIApp(sio, socketio_path="/ws/socket.io")
 
 rooms = {}
+
 async def gen_roomid():
     """Generates a random room id"""
     while True:
@@ -47,12 +50,25 @@ async def connect_player(sid, data):
         await sio.emit("player_connected_successfuly", {"username": username}, namespace='/room', room=room_id)
 
 @sio.event(namespace='/room')
-async def host(sid):
+async def host(sid, data):
     "Connects a host to the quiz"
+    room_id = str(await gen_roomid())
+    
+    try:
+        user = await verify_user(data.get("token"))
+        user_id = user.user.id
+        if not user:
+            await emit_error(room_id, 'host_unauthenticated', "Authentication Required, Please Login to continue.")
+    except Exception as e:
+        await emit_error(room_id, 'host_unauthenticated', "Authentication Required, Please Login to continue.")
+        raise Exception(e) 
+    
+
     print(f"Client connected: {sid}")
 
-    room_id = str(await gen_roomid())
     rooms.update({room_id: {"current_question_index": 0}})
+    rooms[room_id]["user_id"] = user_id
+    rooms[room_id]["responses_data"] = {}
 
     await sio.enter_room(sid, room_id, namespace='/room')
     print(f"yay! room {room_id} was created")
@@ -66,27 +82,35 @@ async def get_question(sid, data):
     index = data.get("index")
     room_id = data.get("room_id")
     rooms[room_id]["current_question_index"] = index
-    
+    user_id = rooms[room_id]["user_id"]
+
     response = (
         supabase.table("quizzes")
-        .select("questions").eq("url", url)
+        .select("questions, title").eq("url", url).eq("user_id", user_id)
         .execute()
     )
+
+    print(response)
     questions = list(response.data[0]["questions"])
-    question = questions[index]
-    answers = response.data[0]["questions"][question]
+    title = response.data[0]["title"]
+    if len(questions)-1 >= index:
+        question = questions[index]
+        answers = response.data[0]["questions"][question]
 
-    await reset_players_time_up(room_id)
+        await reset_players_time_up(room_id)
 
-    rooms[room_id]["current_question"] = {"question": question, "answers": answers[1:], "info": answers[0]["info"]}
-    rooms[room_id]["question_duration"] = answers[0]["info"]["duration"]
-    rooms[room_id]["question_start_time"]  = time.time()
-    print(len(questions))
-    rooms[room_id]["final_question"] = len(questions)-1 <= index
-    print(rooms[room_id]["final_question"])
+        rooms[room_id]["current_question"] = {"question": question, "answers": answers[1:], "info": answers[0]["info"]}
+        rooms[room_id]["question_duration"] = answers[0]["info"]["duration"]
+        rooms[room_id]["question_start_time"]  = time.time()
+        rooms[room_id]["questions"] = questions
+        rooms[room_id]["title"] = title
 
-    await sio.emit("question_response", {"question": question, "answers": answers[1:], "info": answers[0]["info"]}, namespace='/room', room=room_id)
-    await sio.emit("client_question_response", {"question": question, "answers": [next(iter(item)) for item in answers[1:]]}, namespace='/room', room=room_id)
+        print(len(questions))
+        rooms[room_id]["final_question"] = len(questions)-1 <= index
+        print(rooms[room_id]["final_question"])
+
+        await sio.emit("question_response", {"question": question, "answers": answers[1:], "info": answers[0]["info"]}, namespace='/room', room=room_id)
+        await sio.emit("client_question_response", {"question": question, "answers": [next(iter(item)) for item in answers[1:]]}, namespace='/room', room=room_id)
 
 @sio.event(namespace='/room')
 async def validate_question(sid, data):
@@ -95,7 +119,7 @@ async def validate_question(sid, data):
     session = await sio.get_session(sid, namespace='/room')
     if session.get("ans_status") != "time_up":
         return
-
+    
     state = rooms.get(room_id, {})
     is_correct, = rooms[room_id]["current_question"]["answers"][index].values()
     start = state.get("question_start_time", time.time())
@@ -107,10 +131,8 @@ async def validate_question(sid, data):
         min_score = 500
         score = round(min_score + (max_score-min_score) * ((total_secs-time_taken)/total_secs)**1.5)
         await increment_player_score(sid, score)
-        print(score)
     else:
         await player_wrong(sid)
-        print("answer is wrong")
 
 @sio.event(namespace='/room')
 async def question_finished(sid, data):
@@ -122,28 +144,30 @@ async def question_finished(sid, data):
     print("question is finished.")
     room_id = data.get("room_id")
     if not room_id:
-        await sio.emit(
-            "error",
-            {"message": "Missing room_id"},
-            namespace="/room",
-            room=sid
-        )
+        await emit_error(sid=sid, title="room_creation_error", message="error when creating a room, please try again")
         return
 
     # broadcast the sorted leaderboard
-    if not rooms[room_id]["final_question"]:
+    if rooms[room_id]["final_question"] == False:
         await emit_current_leaderboard(room_id)
         # then send each player their own status/place
         await emit_personal_status(room_id)
     else:
+        # save per student data
         await emit_current_leaderboard(room_id, "final_leaderboard")
         # then send each player their own status/place
         await emit_personal_status(room_id, "final_player_status")
+
+        await end_game_and_disconnect(room_id)
 
 @sio.event(namespace='/room')
 async def disconnect(sid):
     print(f"Client disconnected: {sid}")
     await sio.save_session(sid, {}, namespace='/room')
+
+
+
+
 
 async def reset_players_time_up(room_id: str):
     """
@@ -170,11 +194,19 @@ async def emit_current_leaderboard(room_id: str, event_name: str = "current_lead
     # sort into [(sid, [username, score]), …] by score desc
     sorted_players = sorted(players.items(), key=lambda it: it[1][1], reverse=True)
 
+    print(sorted_players)
     # build a simple list of dicts for the leaderboard
     leaderboard = [
         {"username": username, "score": score}
-        for _, (username, score) in sorted_players
+        for _, (username, score, _) in sorted_players
     ]
+    # saves a per player question answering status, that would be saved for later (teacher analytics)
+    question_status = [
+        {"username": username, "ans_status": ans_status}
+        for _, (username, _, ans_status) in sorted_players
+    ]
+    current_question_index = rooms[room_id]["current_question_index"]
+    rooms[room_id]["responses_data"][current_question_index] = question_status
 
     await sio.emit(
         event_name,
@@ -182,6 +214,9 @@ async def emit_current_leaderboard(room_id: str, event_name: str = "current_lead
         namespace="/room",
         room=room_id
     )
+    if event_name == "final_leaderboard":
+        await save_player_data(room_id, rooms[room_id]["responses_data"], len(sorted_players))
+    
 
 async def emit_personal_status(room_id: str, event_name: str = "player_status"):
     """
@@ -192,7 +227,7 @@ async def emit_personal_status(room_id: str, event_name: str = "player_status"):
     players = await get_players_in_room(room_id)
     sorted_players = sorted(players.items(), key=lambda it: it[1][1], reverse=True)
 
-    for place, (sid, (username, score)) in enumerate(sorted_players, start=1):
+    for place, (sid, (username, score, ans_status)) in enumerate(sorted_players, start=1):
         session = await sio.get_session(sid, namespace="/room")
         if not session:
             continue
@@ -200,7 +235,7 @@ async def emit_personal_status(room_id: str, event_name: str = "player_status"):
         await sio.emit(
             event_name,
             {
-                "ans_status": session.get("ans_status"),
+                "ans_status": ans_status,
                 "score": score,
                 "place": place
             },
@@ -293,6 +328,81 @@ async def get_players_in_room(room_id: str) -> dict:
         if session and session.get("type") == "player":
             username = session.get("username")
             score = session.get("score", 0)
-            players[sid] = [username, score]
+            ans_status = session.get("ans_status")
+            players[sid] = [username, score, ans_status]
     
     return players
+
+
+async def end_game_and_disconnect(room_id: str):
+    """
+    Fully disconnect every player socket in the room.
+    SocketIO will automatically clear their sessions on disconnect.
+    """
+    room_sids = set(sio.manager.rooms.get('/room', {}).get(room_id, []))
+
+    for sid in room_sids:
+        await sio.disconnect(sid, namespace='/room')
+
+    # clears up room dict
+    rooms.pop(room_id, None)
+
+async def save_player_data(room_id: str, responses_data: dict, player_count: int) -> None:
+    questions = rooms[room_id]["questions"]
+    title = rooms[room_id]["title"]
+    question_results = await get_question_results(responses_data, questions)
+    player_results = await get_player_results(responses_data, questions)
+    response = (
+        supabase.table("game_results")
+        .insert({"user_id": rooms[room_id]["user_id"],
+                "raw_data": responses_data, "player_data": player_results,
+                "question_results": question_results, "player_count": player_count,
+                "quiz_title": title})
+        .execute()
+    )
+
+
+async def get_question_results(responses_data: dict, questions: list):
+    """
+    Generates a question dict mapping each question to it's correct, incorrect and not_answered (time_up)
+    """
+    question_results = {}
+    for q_index, responses in responses_data.items():
+        counts = {'correct': 0, 'wrong': 0, 'not_answered': 0}
+        question_results[questions[q_index]] = []
+        print(questions[q_index], -2311)
+        for resp in responses:
+            status = resp.get('ans_status')
+            if status == 'correct':
+                counts['correct'] += 1
+            elif status == 'wrong':
+                counts['wrong'] += 1
+            else:
+                counts['not_answered'] += 1
+
+        question_results[questions[q_index]].append(counts)
+    return question_results
+    
+async def get_player_results(responses_data: dict, questions: list):
+    """
+    Generate a summary dict mapping each username to a dict of
+    question_index : ans_status.
+    """
+    player_results = {}
+    for q_index, responses in responses_data.items():
+        for resp in responses:
+            user = resp.get('username')
+            status = resp.get('ans_status')
+            # Initialize user entry if needed
+            if user not in player_results:
+                player_results[user] = {}
+            # Record the status for this question index
+            player_results[user][questions[q_index]] = status
+    return player_results
+
+# Error Handling
+async def emit_error(room_id: str = None, title: str = None, message: str = None, namespace='/room', sid: str = None):
+    if room_id:
+        await sio.emit("error", {"title": title, "message": message}, namespace=namespace, room=room_id)
+    elif sid:
+        await sio.emit("error", {"title": title, "message": message}, namespace=namespace, sid=room_id)

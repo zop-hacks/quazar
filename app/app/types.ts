@@ -1,6 +1,7 @@
 export interface RoomConnectorProps {
   quizTitle: string;
   quizUrl: string;
+  token: string
 }
 export interface PlayerMap {
   [clientId: string]: [string, number];

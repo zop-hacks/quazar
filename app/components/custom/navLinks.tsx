@@ -15,7 +15,7 @@ export const navLinks: Array<NavLinkProps> = [
     href: "/gen-quiz",
   },
   {
-    display_name: "Repo ",
+    display_name: "Repo",
     href: "",
   },
 ];

@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { QuestionSelector } from "./question-selector";
 import { QuestionEditor } from "./question-editor";
-import { SaveButton } from "./save-button";
 import { toast, Toaster } from "sonner";
 import type {
   QuizData,
@@ -44,7 +43,9 @@ function parseQuizData(quizJson: QuizData): ParsedQuizData {
 function formatQuizData(quizData: ParsedQuizData): QuizData {
   const result: Record<string, any[]> = {};
 
-  quizData.questions.forEach((q: any) => {
+  quizData.questions
+  .filter((q: any) => q.question.trim() !== "")
+  .forEach((q: any) => {
     const formattedAnswers: Array<{ info: Info } | AnswerMap> = [
       { info: { duration: q.duration } },
     ];
@@ -87,6 +88,8 @@ export function QuizEditor({
   const [quizData, setQuizData] = useState<ParsedQuizData>(() =>
     parseQuizData(initialQuizData)
   );
+  const isFirstRun = useRef(true);
+  
 
   const handleToggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed);
@@ -118,6 +121,20 @@ export function QuizEditor({
     toast.success("New question added");
   };
 
+  useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+
+    const save = async () => {
+      const formatted = formatQuizData(quizData);
+      await onSave({ quizData: formatted, userId, quizUrl });
+      toast.success("Quiz saved");
+    };
+    save();
+  }, [quizData.questions[selectedQuestionIndex]]);
+
   const handleUpdateQuestion = (updatedQuestion: any) => {
     const newQuestions = [...quizData.questions];
     newQuestions[selectedQuestionIndex] = updatedQuestion;
@@ -128,16 +145,16 @@ export function QuizEditor({
       questions: newQuestions,
     });
 
-    toast.message("Question updated!");
     console.log("question updated")
+    return quizData
+
   };
 
   const handleSaveQuiz = async () => {
     const formattedData: QuizData = formatQuizData(quizData);
     console.log(formattedData, userId, quizUrl);
     onSave({ quizData: formattedData, userId: userId, quizUrl: quizUrl });
-
-    toast.success("Quiz saved successfully");
+    return formattedData
   };
 
   // Create a questions object for the selector component
@@ -164,13 +181,13 @@ export function QuizEditor({
               {quizData.quizTitle || "Untitled Quiz"}
             </h1>
           </div>
-          <SaveButton onSave={handleSaveQuiz} />
         </div>
 
         {quizData.questions.length > 0 && (
           <QuestionEditor
             questionData={quizData.questions[selectedQuestionIndex]}
             onUpdate={handleUpdateQuestion}
+            onSave={handleSaveQuiz}
           />
         )}
       </div>
