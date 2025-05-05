@@ -99,10 +99,9 @@
           answers: [{ "": false }],
           info: { duration: 0 },
         })
-        
+        questionIndex.current +=  1
         fetchQuestion();
         setTimeout(() => {
-          questionIndex.current +=  1;
           setGameState("question");
         }, 300);
       }

@@ -14,9 +14,10 @@ interface FormInputProps {
   icon: React.ReactNode
   required?: boolean
   autoFocus?: boolean
+  defaultValue?: string
 }
 
-export const FormInput = ({ name, label, placeholder, icon, required = false, autoFocus = false }: FormInputProps) => {
+export const FormInput = ({ name, label, placeholder, defaultValue, icon, required = false, autoFocus = false }: FormInputProps) => {
   const [isFocused, setIsFocused] = useState(false)
 
   return (
@@ -36,6 +37,7 @@ export const FormInput = ({ name, label, placeholder, icon, required = false, au
           placeholder={placeholder}
           required={required}
           autoFocus={autoFocus}
+          defaultValue={defaultValue}
           className="h-12 px-4 border-zinc-300 focus:border-indigo-300 focus:ring-indigo-300"
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}

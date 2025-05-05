@@ -132,7 +132,7 @@ roby_sys_prompt = (
 )
 roby = Agent(name="Roby", instructions=roby_sys_prompt)
 
-async def research(info: Sam, content_summary: str =None) -> str:
+async def research(info: Sam, content_summary: str = None) -> str:
     """Roby Gathers information about the subject, and summarizes it.
 
     Args:

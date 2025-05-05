@@ -18,7 +18,6 @@ const page = async () => {
   if (error || !data?.user) {
     redirect("/login");
   }
-  console.log(data.user.id);
   const { data: results, error: resulterror } = await supabase
     .from("game_results")
     .select("created_at, id, quiz_title, player_count")

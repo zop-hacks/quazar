@@ -11,7 +11,7 @@ import { FormInput } from "./form-input"
 import { z } from "zod"
 import { joinGameSchema } from "./types"
 
-export const JoinGameForm = () => {
+export const JoinGameForm = ({defaultRoomId}: {defaultRoomId: string}) => {
   const router = useRouter()
   const [errors, setErrors] = useState<{ room_id?: string; username?: string }>({})
 
@@ -73,6 +73,7 @@ export const JoinGameForm = () => {
               name="room_id"
               label="Room ID"
               placeholder="Enter the room code"
+              defaultValue={defaultRoomId}
               icon={<Users size={18} />}
               required
               autoFocus

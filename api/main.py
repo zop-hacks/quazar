@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from quiz import socket_app
-
+from routes import summarize_info
 app = FastAPI()
 
 app.add_middleware(
@@ -12,3 +12,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.mount("/ws", app=socket_app)
+app.include_router(summarize_info.router)
