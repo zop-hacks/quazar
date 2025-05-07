@@ -11,7 +11,7 @@ import { FormInput } from "./form-input"
 import { z } from "zod"
 import { joinGameSchema } from "./types"
 
-export const JoinGameForm = ({defaultRoomId}: {defaultRoomId: string}) => {
+export const JoinGameForm = ({defaultRoomId}: {defaultRoomId: string | undefined}) => {
   const router = useRouter()
   const [errors, setErrors] = useState<{ room_id?: string; username?: string }>({})
 

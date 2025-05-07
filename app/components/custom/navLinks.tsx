@@ -18,6 +18,10 @@ export const navLinks: Array<NavLinkProps> = [
     display_name: "Repo",
     href: "",
   },
+  {
+    display_name: "Play",
+    href: "/play",
+  },
 ];
 
 export const bottomNavLinks: Array<NavLinkIconProps> = [

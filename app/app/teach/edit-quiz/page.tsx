@@ -21,7 +21,7 @@ const Page = async ({
       "/host/quiz-error?message=No quiz id was provided, or was not valid, try creating a new quiz instead."
     );
   }
-  const { data: quizzes, error: quizerror } = await supabase
+  const { data: quizzes, error: quizerror }: any = await supabase
     .from("quizzes")
     .select("title, url, id, description, created_at, questions")
     .eq("user_id", data.user.id)

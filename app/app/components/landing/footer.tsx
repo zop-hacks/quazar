@@ -37,16 +37,6 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#pricing" className="hover:text-white">
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">
-                  Testimonials
-                </a>
-              </li>
-              <li>
                 <a href="#" className="hover:text-white">
                   FAQ
                 </a>
@@ -58,7 +48,8 @@ export function Footer() {
             <h3 className="mb-4 text-lg font-semibold text-white">Resources</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-white">
+                {/* note: add repo here at the link */}
+                <a href="#" className="hover:text-white"> 
                   Documentation
                 </a>
               </li>
@@ -75,32 +66,6 @@ export function Footer() {
               <li>
                 <a href="#" className="hover:text-white">
                   Support
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="mb-4 text-lg font-semibold text-white">Company</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="hover:text-white">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">
-                  Careers
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">
-                  Terms of Service
                 </a>
               </li>
             </ul>

@@ -12,7 +12,7 @@ const faqs = [
   {
     question: "How does Quazar generate quiz questions?",
     answer:
-      "Quazar uses advanced AI language models to generate quiz questions based on the topics and learning objectives you provide. The AI understands educational concepts and creates relevant, challenging questions that test understanding rather than just memorization.",
+      "Quazar uses advanced AI agents to generate quiz questions based on the topics and learning objectives you provide. The AI understands educational concepts and creates relevant, challenging questions that test understanding rather than just memorization.",
   },
   {
     question: "Can I edit the AI-generated questions?",
@@ -22,22 +22,12 @@ const faqs = [
   {
     question: "How do participants join a quiz?",
     answer:
-      "Participants join by entering a unique code on the Quazar website or app. No account creation is required for participants, making it easy for anyone to join instantly from any device with a web browser.",
-  },
-  {
-    question: "Is Quazar suitable for educational institutions?",
-    answer:
-      "Yes, Quazar is designed with educators in mind. It's used by teachers, professors, and trainers at all levels of education. Our Team plan includes features specifically for schools and universities, such as SSO integration and advanced analytics.",
+      "Participants join by entering a unique code on the Quazar website. No account creation is required for participants, making it easy for anyone to join instantly from any device with a web browser.",
   },
   {
     question: "Can I use Quazar for remote learning?",
     answer:
       "Definitely! Quazar works perfectly for remote and hybrid learning environments. Participants can join from anywhere with an internet connection, making it ideal for distance education, virtual classrooms, and distributed teams.",
-  },
-  {
-    question: "How secure is my quiz data?",
-    answer:
-      "We take data security seriously. All quiz data is encrypted, and we follow industry best practices for data protection. We never share your content or participant data with third parties, and you retain full ownership of all your quizzes.",
   },
 ];
 

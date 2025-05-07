@@ -77,9 +77,9 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Quazar uses advanced AI to generate customized quizzes based on any
-            topic or learning objective. Perfect for educators, trainers, and
-            anyone who wants to create engaging learning experiences.
+            Quazar uses advanced AI to generate customized quizzes based on a
+            topic and some additional info. Perfect for educators, trainers, and
+            anyone who wants to make their lessons interractive.
           </motion.p>
           <div className="flex justify-center gap-3">
             <Link href="/teach/my-quizzes">
@@ -90,21 +90,7 @@ export function HeroSection() {
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
                 <Button className="h-12 bg-gradient-to-r from-purple-600 to-indigo-600 px-8 text-base font-medium text-white hover:from-purple-700 hover:to-indigo-700">
-                  Generate
-                </Button>
-              </motion.div>
-            </Link>
-            <H1>Or</H1>
-
-            <Link href="/play">
-              <motion.div
-                className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-              >
-                <Button className="h-12 bg-gradient-to-r from-purple-600 to-indigo-600 px-8 text-base font-medium text-white hover:from-purple-700 hover:to-indigo-700">
-                  Join Game
+                  Generate Your Quiz
                 </Button>
               </motion.div>
             </Link>
@@ -123,7 +109,7 @@ export function HeroSection() {
           </motion.div>
         </div>
 
-        {/* <motion.div
+        {/* <motion.div note: deleteme if not using
           className="mt-16 rounded-xl bg-white p-4 shadow-xl  sm:p-6"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}

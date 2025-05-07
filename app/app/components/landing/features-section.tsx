@@ -1,44 +1,38 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Brain, Zap, Users, Clock, BarChart, Sparkles } from "lucide-react";
+import { Brain, Zap, Users, Clock, BarChart, Sparkles, Speaker, Mic } from "lucide-react";
 
 const features = [
   {
     icon: <Brain className="h-6 w-6 text-purple-600" />,
     title: "AI-Powered Generation",
     description:
-      "Generate quizzes on any topic using advanced AI that understands learning objectives and creates relevant questions.",
+      "Generate quizzes on any topic using advanced LLM agents.",
   },
   {
     icon: <Clock className="h-6 w-6 text-indigo-600" />,
     title: "Save Time",
     description:
-      "Create comprehensive quizzes in seconds instead of hours. Focus on teaching, not quiz creation.",
+      "Create quizzes in seconds instead of hours. Focus on teaching, not quiz creation.",
   },
   {
     icon: <Users className="h-6 w-6 text-blue-600" />,
     title: "Interactive Multiplayer",
     description:
-      "Host live quiz sessions where participants join via their devices and compete in real-time.",
+      "Host live quiz sessions where participants join via their devices, compete, learn, and have fun in real-time.",
   },
-  {
-    icon: <Zap className="h-6 w-6 text-amber-600" />,
-    title: "Instant Feedback",
-    description:
-      "Participants receive immediate feedback on their answers, enhancing the learning experience.",
-  },
+  // { note: add me :)
+  //   icon: <Mic className="h-6 w-6 text-amber-600" />,
+  //   title: "Speak to generate",
+  //   description:
+  //     "Generate quizzes by speaking to an LLM assistant",
+  // },
   {
     icon: <BarChart className="h-6 w-6 text-emerald-600" />,
     title: "Detailed Analytics",
     description:
-      "Track performance with comprehensive analytics to identify knowledge gaps and improve learning outcomes.",
-  },
-  {
-    icon: <Sparkles className="h-6 w-6 text-rose-600" />,
-    title: "Customizable Design",
-    description:
-      "Personalize your quizzes with custom themes, images, and branding to match your style.",
+      "Track your class's performance with comprehensive analytics to identify knowledge gaps, and quiz effectiveness.",
   },
 ];
 
@@ -66,8 +60,8 @@ export function FeaturesSection() {
             Everything You Need to Create Amazing Quizzes
           </h2>
           <p className="mt-4 text-lg text-zinc-600 ">
-            Quazar combines powerful AI with intuitive design to make quiz
-            creation and delivery effortless.
+            Quazar combines powerful LLMs with intuitive design to make quiz
+            creation and delivery fast and easy.
           </p>
         </div>
 
