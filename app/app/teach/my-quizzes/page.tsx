@@ -16,12 +16,16 @@ const page = async () => {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.getUser();
   if (error || !data?.user) {
-    redirect("/login");
+    redirect("/login?message=Please authenticate in order to view My Quizzes");
   }
   const { data: quizzes, error: quizerror } = await supabase
     .from("quizzes")
     .select("title, url, id, description, created_at")
     .eq("user_id", data.user.id);
+  
+  if(quizerror) {
+    redirect('/error?message=Please authenticate in order to view My Quizzes')
+  }
   return (
     <div className="container mx-auto py-8">
       <div className="flex items-left mb-6 gap-5">

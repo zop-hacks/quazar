@@ -108,21 +108,6 @@ export function HeroSection() {
             <span>OpenSource</span>
           </motion.div>
         </div>
-
-        {/* <motion.div note: deleteme if not using
-          className="mt-16 rounded-xl bg-white p-4 shadow-xl  sm:p-6"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
-        >
-          <div className="aspect-[16/9] overflow-hidden rounded-lg bg-zinc-100 ">
-            <img
-              src="/placeholder.svg?height=720&width=1280"
-              alt="Quazar Quiz App Interface"
-              className="h-full w-full object-cover"
-            />
-          </div>
-        </motion.div> */}
       </div>
 
       {/* CSS for animations */}

@@ -47,7 +47,7 @@ export default function QuizCreator({ onRedirect }: QuizCreatorProps) {
       setQuizStatMessage(data.message);
     });
     socket.on("error", (data) => {
-      console.log(data);
+      onRedirect(`/error?message=${data.message}`)
     });
     return () => {
       socket.disconnect();
@@ -68,6 +68,7 @@ export default function QuizCreator({ onRedirect }: QuizCreatorProps) {
       setPayload({ ...values, sourceMaterial: sourceMaterialUrl, token });
     } catch (err) {
       console.error("JWT error:", err);
+      
     }
   };
 
