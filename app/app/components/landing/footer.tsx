@@ -48,26 +48,15 @@ export function Footer() {
             <h3 className="mb-4 text-lg font-semibold text-white">Resources</h3>
             <ul className="space-y-2">
               <li>
-                {/* note: add repo here at the link */}
-                <a href="#" className="hover:text-white"> 
-                  Documentation
+                <a href="https://github.com/zop-hacks/quazar" className="hover:text-white"> 
+                  GitHub Repo
                 </a>
               </li>
-              <li>
-                <a href="#" className="hover:text-white">
-                  Blog
+              {/* <li> note: add demo video here
+                 <a href="https://github.com/zop-hacks/quazar" className="hover:text-white"> 
+                  Demo Video
                 </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">
-                  Tutorials
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white">
-                  Support
-                </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

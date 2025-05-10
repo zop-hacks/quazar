@@ -1,4 +1,4 @@
-import { HomeIcon, LogIn, CirclePlus, BookOpenText } from "lucide-react";
+import { HomeIcon, LogIn, CirclePlus, BookOpenText, ChartNoAxesColumnIncreasing } from "lucide-react";
 import { NavLinkProps, NavLinkIconProps } from "@/components/navigation/navtypes";
 
 export const navLinks: Array<NavLinkProps> = [
@@ -15,8 +15,12 @@ export const navLinks: Array<NavLinkProps> = [
     href: "/gen-quiz",
   },
   {
+    display_name: "Quiz Analytics",
+    href: "/teach/my-analytics",
+  },
+  {
     display_name: "Repo",
-    href: "",
+    href: "https://github.com/zop-hacks/quazar",
   },
   {
     display_name: "Play",
@@ -39,6 +43,11 @@ export const bottomNavLinks: Array<NavLinkIconProps> = [
     display_name: "Create Quiz",
     href: "/gen-quiz",
     icon: <CirclePlus />,
+  },
+  {
+    display_name: "Quiz Analytics",
+    href: "/teach/my-analytics",
+    icon: <ChartNoAxesColumnIncreasing />
   },
   {
     display_name: "Login",

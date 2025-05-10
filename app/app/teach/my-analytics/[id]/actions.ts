@@ -1,5 +1,6 @@
 "use server";
 import { Analytics, AnalyticsSum } from "@/app/components/analytics";
+import { API_ADDRESS } from "@/lib/utils";
 import { getJWTtoken } from "@/utils/gen-jwt";
 import { redirect } from "next/navigation";
 
@@ -8,7 +9,7 @@ export const summarizeAnalytics = async (
 ): Promise<AnalyticsSum>  => {
   console.log("activated!");
   const token = await getJWTtoken();
-  const url = `http://0.0.0.0:8000/sum-info`;
+  const url = `${API_ADDRESS}/sum-info`;
 
   try {
     const response = await fetch(url, {
@@ -27,6 +28,6 @@ export const summarizeAnalytics = async (
     return json;
   } catch (error: any) {
     console.error(error.message);
-    redirect(`/error?message=${error.message}`)
+    redirect(`/error?message=lol`)
   }
 };
