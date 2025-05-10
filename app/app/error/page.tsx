@@ -5,8 +5,9 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { AlertCircle, CirclePlus, LogIn } from "lucide-react"
 import Link from "next/link"
+import { Suspense } from "react"
 
-export default function ErrorPage() {
+const LoadError = () => {
   const searchParams = useSearchParams()
   const message = searchParams.get("message") || "An unexpected error occurred"
 
@@ -42,3 +43,9 @@ export default function ErrorPage() {
     </div>
   )
 }
+
+const Page = () => {
+  return <Suspense><LoadError/></Suspense>
+}
+
+export default Page
