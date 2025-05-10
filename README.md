@@ -7,18 +7,17 @@ Quazar is an open-source, hackathon-born web app that uses a chain of LLM-powere
 ---
 
 ## 🚀 Features
-
-- **Instant Quiz Creation:** Streamed, real-time generation of multiple choice questins on any topic.  
-- **Agent Pipeline:** NSFW‐safe input validation through to polished, reviewed questions  
-- **Multiplayer Gameplay:** Host games, join via room code, real-time leaderboards  
-- **PDF Support:** Upload course notes or papers for in-depth content summaries  
+- **Quiz Generation:** Generate multiple choice questins on any topic, in under a minute (per quiz), using multiple Agents, that verifies input, summarizes it, researches about a topic, creates questions, and         
+  validates them (explained more in details below).
+- **Multiplayer Gameplay:** Host games, join via room code, real-time leaderboards, and most importantly, learn and have fun!
+- **Quiz Analytics**: Easily get detailed analytics generated from your games, made for teachers who want to know how well did their quiz go.
+  the analytics can be easily summarized into conclusions, by clicking on the *AI summary button*.
+- **Edit Quizzes**: Modify, delete, or add questions, it's self-explanatory.
 
 ---
 
 ## 🔍 Architecture
-
-Below is the chain of agents that turn your prompt into a finished quiz:
-
+The architecture behind the generation of the quizzes!
 ![Agent Pipeline Diagram](assets/agents.png)
 
 | Agent  | Role                                                                 |
