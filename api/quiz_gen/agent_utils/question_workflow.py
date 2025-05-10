@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from quiz_gen.type_annotations import QAPair, QuestionCreatingError
 from typing import List
 from quiz_gen.agent_utils.agent_prompts import Sam
+from random import shuffle
 
 class QMA(BaseModel):
     question: str
@@ -180,7 +181,14 @@ async def iter_questions(questions: dict, info: Sam, expanded_summary: str):
                 answers.append({i: True})
         else:
             answers.append({correct_answers: True})
+        
+        # Shuffles the answers, but keeps the info as the first argument (for easier handling later)
+        ans_lst = answers[1:]
+        shuffle(ans_lst)
+        answers[1:] = ans_lst
+
         new_questions.update({question: answers})
+        
 
     async with asyncio.TaskGroup() as tg:
         for q, a in questions.items():
