@@ -1,6 +1,6 @@
 # Quazar
 <img src="assets/quazar_logo.png" alt="quazar logo" width="200" />
-**Live Demo:** https://quazarai.com
+**Live Demo:** https://quazar--quazarai.us-central1.hosted.app/
 
 Quazar is an open-source, hackathon-born web app that uses a chain of LLM-powered agents to generate and host live, interactive multiplayer quizzes—no manual question writing required.
 
