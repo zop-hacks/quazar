@@ -4,14 +4,14 @@
 
 Quazar is an open-source, hackathon-born web app that uses a chain of LLM-powered agents to generate and host live, interactive multiplayer quizzes—no manual question writing required.
 
-self hosting setup: [Self-Host](#setup)
+self hosting setup: [Self-Host](README.md#-setup)
 ---
 
 # 🚀 Features
 - **Quiz Generation:** Generate multiple choice questins on any topic, in under a minute (per quiz), using multiple Agents, that verifies input, summarizes it, researches about a topic, creates questions, and         
   validates them. [explained in more details below](#quiz-generation)
-- **Multiplayer Gameplay:** Host games, join via room code, real-time leaderboards, and most importantly, learn and have fun! (explained in more details below)[#multiplayer-game-flow]
-- **Quiz Analytics**: Easily get detailed analytics generated from your games, made for teachers who want to know how well did their quiz go.(explained in more details below)[#analytics]
+- **Multiplayer Gameplay:** Host games, join via room code, real-time leaderboards, and most importantly, learn and have fun! [explained in more details below](#multiplayer-game-flow)
+- **Quiz Analytics**: Easily get detailed analytics generated from your games, made for teachers who want to know how well did their quiz go.[explained in more details below](#analytics)
   the analytics can be easily summarized into conclusions, by clicking on the *AI summary button*.
 - **Edit Quizzes**: Modify, delete, or add questions, it's self-explanatory.
 ---
