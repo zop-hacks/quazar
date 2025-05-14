@@ -114,6 +114,7 @@ async def get_question(sid, data):
 
 @sio.event(namespace='/room')
 async def validate_question(sid, data):
+    "validates a question, with a question index"
     index = data.get("index")
     room_id = data.get("room_id")
     session = await sio.get_session(sid, namespace='/room')
