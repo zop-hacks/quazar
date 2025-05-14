@@ -64,7 +64,7 @@ score = round(min_score + (max_score-min_score) * ((total_secs-time_taken)/total
 
 ---
 ## 🚧 Setup
-I would highly advise to [try the demo](quazar--quazarai.us-central1.hosted.app) instead, since this setup is quite complex.
+I would highly advise to [try the demo](https://quazar--quazarai.us-central1.hosted.app) instead, since this setup is quite complex.
 
 Prerequesits: 
 1. A supabase account
