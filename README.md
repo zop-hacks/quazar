@@ -128,4 +128,3 @@ create table public.game_results (
 ---
 
 Made with ❤️ by ZOP 
-Submitted to the [AlgoArena Hackathon](https://algoarena.devpost.com/) and the [CodePI 2025 hackathon](https://codepi-ic-2025-1.devpost.com/)
